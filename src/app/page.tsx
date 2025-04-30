@@ -299,17 +299,17 @@ export default function Home() {
             {[
               {
                 quote: "DevPrep helped me land my dream job at Google. The AI interviewer gave me feedback that was spot on!",
-                name: "Alex Johnson",
+                name: "Example Name",
                 title: "Software Engineer at Google"
               },
               {
                 quote: "After practicing with DevPrep for just two weeks, I felt so much more confident in my actual interviews.",
-                name: "Sarah Chen",
+                name: "Example Name",
                 title: "Frontend Developer at Meta"
               },
               {
                 quote: "The realistic interview environment and detailed feedback reports helped me identify and fix my weaknesses.",
-                name: "Michael Rodriguez",
+                name: "Example Name",
                 title: "Full Stack Developer at Amazon"
               }
             ].map((testimonial, index) => (
