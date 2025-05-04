@@ -1,36 +1,81 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 💻 DevPrep – AI-Powered Mock Interview Platform
 
-## Getting Started
+DevPrep is a web-based platform designed to help aspiring developers prepare for technical coding interviews. By combining real-world LeetCode-style problems with AI-generated feedback, DevPrep offers a realistic, interactive, and educational mock interview experience.
 
-First, run the development server:
+🌐 Live Demo: [DevPrep](https://devprep-aaoe.onrender.com/)
+
+---
+
+## 🧠 Key Features
+
+- 🎯 **Real LeetCode-style Questions**  
+  Practice with a curated set of coding challenges commonly asked in interviews.
+
+- 🤖 **AI Interviewer Simulation**  
+  Receive automated, intelligent feedback on your responses from a simulated interviewer.
+
+- 📊 **Performance Reports**  
+  Get insights into your problem-solving speed, logic, and areas of improvement.
+
+- 🧪 **Built for Learning**  
+  Designed to help junior developers practice, learn, and gain confidence.
+
+---
+
+## 🛠️ Tech Stack
+
+| Layer        | Technologies                                |
+|--------------|---------------------------------------------|
+| **Frontend** | Next.js (React) / TypeScript / Tailwind CSS |
+| **Backend**  | Next.js API Routes (TypeScript)             |
+| **AI Engine**| Groq API                                    |
+| **Database** | TBD                                         |
+| **Deploy**   | Render.com                                  |
+
+---
+
+## 🚀 Getting Started
+
+### 📦 Prerequisites
+
+Ensure you have the following installed:
+
+- Node.js v18+
+- npm / yarn
+- Next.js
+- Groq API Key
+
+### 🔧 Installation
+
+```bash
+git clone https://github.com/OfficialProtonDev/DevPrep.git
+cd DevPrep
+npm install
+```
+
+## 🧪 Run Locally
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🔐 Environment Variables
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Configure the following env variables:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+GROQ_API_KEY=your_groq_api_key
+```
 
-## Learn More
+## 📸 Screenshots
 
-To learn more about Next.js, take a look at the following resources:
+Coming soon...
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🤝 Contributions
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Contributions, issues, and feature requests are welcome!
+Feel free to open an issue or fork the project.
 
-## Deploy on Vercel
+## 📄 License
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This project is licensed under the MIT License. See LICENSE for details.
