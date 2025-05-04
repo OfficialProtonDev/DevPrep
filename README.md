@@ -38,7 +38,7 @@ DevPrep is a web-based platform designed to help aspiring developers prepare for
 
 ### 📦 Prerequisites
 
-Ensure you have the following installed:
+Ensure you have the following installed / available:
 
 - Node.js v18+
 - npm / yarn
@@ -69,7 +69,11 @@ GROQ_API_KEY=your_groq_api_key
 
 ## 📸 Screenshots
 
-Coming soon...
+<img src="https://github.com/user-attachments/assets/8bb41f54-41a8-482a-8b1d-3dc59b98b3b6" width="750"></img>
+
+<img src="https://github.com/user-attachments/assets/a1c9167d-9a42-47ef-a4bc-f6efc7ced0e4" width="750"></img>
+
+<img src="https://github.com/user-attachments/assets/c29ab9c6-325c-4a2b-9848-962e538427c7" width="750"></img>
 
 ## 🤝 Contributions
 
