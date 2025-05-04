@@ -32,6 +32,8 @@ DevPrep is a web-based platform designed to help aspiring developers prepare for
 | **Database** | TBD                                         |
 | **Deploy**   | Render.com                                  |
 
+**Disclaimer:** Please note the use of AI tools such as Manus (for initial protoyping) and Windsurf (for agentic powered development) was used in the creation of this project, primarily to explore the usefulness and inevitable limitations of these tools.
+
 ---
 
 ## 🚀 Getting Started
