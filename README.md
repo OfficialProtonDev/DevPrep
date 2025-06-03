@@ -26,7 +26,7 @@ DevPrep is a web-based platform designed to help aspiring developers prepare for
 
 | Layer        | Technologies                                |
 |--------------|---------------------------------------------|
-| **Frontend** | Next.js (React) / TypeScript / Tailwind CSS |
+| **Frontend** | React / TypeScript / Tailwind CSS |
 | **Backend**  | Next.js API Routes (TypeScript)             |
 | **AI Engine**| Groq API                                    |
 | **Database** | TBD                                         |
