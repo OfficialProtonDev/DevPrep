@@ -18,12 +18,12 @@ ${context.problemDescription}
 Your current stage in the interview is: ${context.interviewStage}
 
 Guidelines for each interview stage:
-- introduction: Introduce yourself briefly, explain the interview process, and present the problem clearly.
-- problem-solving: Ask clarifying questions, guide the candidate through their approach, provide hints if they're stuck (but don't give away the solution).
+- introduction: Introduce yourself briefly and explain the interview process, do not present the problem to the user, simply state that it is displayed on the side.
+- problem-solving: Ask clarifying questions, guide the candidate through their theoretical approach, provide hints if they're stuck (but don't give away the solution), when they are ready to write code, prompt them to use the code editor tab.
 - code-review: Review the candidate's code, ask about time/space complexity, suggest optimizations, and discuss edge cases.
-- follow-up: Ask follow-up questions to test deeper understanding, discuss alternative approaches, and explore related concepts, ensure you ask at least one thought provoking follow-up question.
+- follow-up: Ask follow-up questions to test deeper understanding, discuss alternative approaches, and explore related concepts, ensure you ask at least one thought provoking follow-up question, don't dive too deep in this stage, keep it short.
 - conclusion: Thank the candidate, and ask if they have any other questions or if you may conclude the interview.
-- finished: If the user has agreeed to conclude the interview, simply state the interview is finished and a report is processing, even if we are still in the conclusion stage.
+- finished: Simply state the interview is finished and a report is processing.
 
 Your responses should be:
 1. Conversational and encouraging
@@ -43,7 +43,7 @@ Remember, you're evaluating:
 };
 
 const getStageContextPrompt = (context: InterviewContext): string => {
-  return `You are a stage-defining agent OBSERVING an experienced technical interviewer conducting a coding interview. 
+  return `You are a stage-defining agent observing an experienced technical interviewer conducting a coding interview. 
 The candidate is working on the following LeetCode problem:
 
 Problem: ${context.problemTitle} (${context.problemDifficulty})
@@ -52,12 +52,12 @@ ${context.problemDescription}
 The current supposed stage in the interview is: ${context.interviewStage}
 
 The different stages are:
-- introduction: The interviewer should have introduced themself and presented the problem to the user.
-- problem-solving: The interviewer should be guiding the user through their approach, asking clarifying questions, etc.
+- introduction: The interviewer should have introduced themself.
+- problem-solving: The interviewer should be guiding the user through their theoretical approach, asking clarifying questions, etc.
 - code-review: The interviewer should be providing a review on specific code provided by the user, suggesting optimizations, discussing edge cases, and leading the user to a satisfactory solution.
 - follow-up: The interviewer should be satisfied with the complete code solution provided by the user, but should be asking follow up questions to gauge their deeper understanding of related concepts or alternative approaches.
 - conclusion: The interviewer should be providing constructive feedback, summarizing strengths and areas for improvement, and thanking the candidate, then asking if they have any other questions or if the interviewer may conclude the interview.
-- finished: The interviewer should have received confirmation to conclude the interview from the user and have simply stated that the interview is finished.
+- finished: The interviewer should have received confirmation to conclude the interview from the user.
 
 Please use the user and interviewer's last message to determine if the stage should be updated from ${context.interviewStage} to a further stage, assuming the interviewer is about to respond based on the stage you return.
 
@@ -116,25 +116,13 @@ export async function generateInterviewerResponse(
       },
       body: JSON.stringify({
         messages: stageContextMessages,
-        model: 'llama3-8b-8192',
+        model: 'llama-3.1-8b-instant',
         temperature: 0.7,
-        max_tokens: 1000
+        max_tokens: 50
       })
     });
     
     const stageData = await stageResponse.json();
-
-    // Extract rate limit headers from stage classification request
-    const stageRateLimitInfo: RateLimitInfo = {
-      remainingRequests: stageResponse.headers.get('x-ratelimit-remaining-requests'),
-      remainingTokens: stageResponse.headers.get('x-ratelimit-remaining-tokens'),
-      resetRequests: stageResponse.headers.get('x-ratelimit-reset-requests'),
-      resetTokens: stageResponse.headers.get('x-ratelimit-reset-tokens'),
-      limitRequests: stageResponse.headers.get('x-ratelimit-limit-requests'),
-      limitTokens: stageResponse.headers.get('x-ratelimit-limit-tokens'),
-      requestId: stageResponse.headers.get('x-request-id'),
-      model: 'llama3-8b-8192'
-    };
 
     if (!stageResponse.ok) {
       console.error('Groq API error:', stageData);
@@ -167,9 +155,9 @@ export async function generateInterviewerResponse(
       },
       body: JSON.stringify({
         messages: allMessages,
-        model: 'llama3-70b-8192',
+        model: 'llama-3.3-70b-versatile',
         temperature: 0.7,
-        max_completion_tokens: 500
+        max_completion_tokens: 750
       })
     });
     
@@ -184,7 +172,7 @@ export async function generateInterviewerResponse(
       limitRequests: response.headers.get('x-ratelimit-limit-requests'),
       limitTokens: response.headers.get('x-ratelimit-limit-tokens'),
       requestId: response.headers.get('x-request-id'),
-      model: 'llama3-70b-8192'
+      model: 'llama-3.3-70b-versatile'
     };
     
     if (!response.ok) {
@@ -196,7 +184,6 @@ export async function generateInterviewerResponse(
 
     // Combine rate limit information from both requests
     const rateLimitInfo: GroqRateLimitInfo = {
-      stageModel: stageRateLimitInfo,
       responseModel: responseRateLimitInfo,
       timestamp: Date.now()
     };
@@ -241,59 +228,59 @@ export async function evaluatePerformance(
 
     // Build the evaluation prompt that instructs the LLM to return a JSON performance report.
     const evaluationPrompt = `
-You are a technical interviewer evaluating a candidate's performance on a LeetCode problem.
+      You are a technical interviewer evaluating a candidate's performance on a LeetCode problem.
 
-Problem Details:
-Title: ${problem.title}
-Difficulty: ${problem.difficulty}
-Description: ${problem.content}
+      Problem Details:
+      Title: ${problem.title}
+      Difficulty: ${problem.difficulty}
+      Description: ${problem.content}
 
-Candidate's code:
-${userCode}
+      Candidate's code:
+      ${userCode}
 
-Interview Messages:
-${messages.map((m) => `${m.role}: ${m.content}`).join('\n')}
+      Interview Messages:
+      ${messages.map((m) => `${m.role}: ${m.content}`).join('\n')}
 
-Interview Duration in seconds: ${interviewDuration}
+      Interview Duration in seconds: ${interviewDuration}
 
-Please analyze the communication efficiency based on:
-1. The duration of the interview
-2. The quality and depth of the conversation
-3. The candidate's ability to communicate effectively
-4. The balance between speed and thoroughness
+      Please analyze the communication efficiency based on:
+      1. The duration of the interview
+      2. The quality and depth of the conversation
+      3. The candidate's ability to communicate effectively
+      4. The balance between speed and thoroughness
 
-Please provide an evaluation report in JSON format matching exactly the following structure:
-{
-  "overallScore": number,
-  "problemUnderstanding": number,
-  "codeQuality": number,
-  "communicationSkills": number,
-  "optimizationSkills": number,
-  "feedback": [
-    {
-      "category": string,
-      "comment": string,
-      "score": number
-    }
-  ],
-  "improvementAreas": [string],
-  "problemName": string,
-  "problemDifficulty": string,
-  "communicationEfficiency": string
-}
+      Please provide an evaluation report in JSON format matching exactly the following structure:
+      {
+        "overallScore": number,
+        "problemUnderstanding": number,
+        "codeQuality": number,
+        "communicationSkills": number,
+        "optimizationSkills": number,
+        "feedback": [
+          {
+            "category": string,
+            "comment": string,
+            "score": number
+          }
+        ],
+        "improvementAreas": [string],
+        "problemName": string,
+        "problemDifficulty": string,
+        "communicationEfficiency": string
+      }
 
-The communicationEfficiency field should be a concise 2-3 word assessment of how well the candidate balanced speed and thoroughness in their communication. For example:
-- "Impressively efficient communication"
-- "Rather inefficient communication"
-- "Balanced discussion"
-- "Quick but thorough"
-- "Detailed but slow"
+      The communicationEfficiency field should be a concise 2-3 word assessment of how well the candidate balanced speed and thoroughness in their communication. For example:
+      - "Impressively efficient communication"
+      - "Rather inefficient communication"
+      - "Balanced discussion"
+      - "Quick but thorough"
+      - "Detailed but slow"
 
-Ensure that:
-- All numbers are realistic (but unforgiving) scores between 0 and 100 (where applicable).
-- Improvement areas are presented as human-readable strings.
-- The JSON output is valid and parseable.
-`;
+      Ensure that:
+      - All numbers are realistic (but unforgiving) scores between 0 and 100 (where applicable).
+      - Improvement areas are presented as human-readable strings.
+      - The JSON output is valid and parseable, with nothing outside the \`\`\`json\`\`\` tags.
+    `;
 
     // Wrap the evaluation prompt in a system message array for the API.
     const evaluationMessages: Message[] = [
@@ -324,7 +311,11 @@ Ensure that:
     
     // Assuming the LLM returns the JSON evaluation as a plain text message.
     const evaluationOutput = data.choices[0].message.content.trim();
-    const cleanOutput = evaluationOutput.replace(/^\s*```(?:json)?\s*|\s*```\s*$/g, '').trim();
+    let cleanOutput = evaluationOutput.replace(/^\s*[\r\n]+|\s*[\r\n]+$/g, '');
+    console.log(cleanOutput);
+    cleanOutput = cleanOutput.replace(/^\s*```(?:json)?\s*|\s*```\s*$/g, '').trim();
+
+    console.log(cleanOutput);
 
     let report: PerformanceReport;
     try {

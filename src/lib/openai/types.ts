@@ -42,7 +42,6 @@ export interface RateLimitInfo {
 }
 
 export interface GroqRateLimitInfo {
-  stageModel: RateLimitInfo;
   responseModel: RateLimitInfo;
   timestamp: number;
 }

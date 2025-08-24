@@ -29,8 +29,7 @@ export function RateLimitTracker({ rateLimitInfo }: RateLimitTrackerProps) {
     if (!rateLimitInfo) return;
 
     // When we get new rate limit info, store the initial values
-    const tokensResetTime1 = rateLimitInfo.stageModel.resetTokens;
-    const tokensResetTime2 = rateLimitInfo.responseModel.resetTokens;
+    const tokensResetTime = rateLimitInfo.responseModel.resetTokens;
     
     const parseResetTime = (time: string | null): number => {
       if (!time) return 0;
@@ -38,8 +37,7 @@ export function RateLimitTracker({ rateLimitInfo }: RateLimitTrackerProps) {
     };
     
     const tokenResetSeconds = Math.max(
-      parseResetTime(tokensResetTime1),
-      parseResetTime(tokensResetTime2)
+      parseResetTime(tokensResetTime)
     );
 
     setInitialResetData({
@@ -100,13 +98,8 @@ export function RateLimitTracker({ rateLimitInfo }: RateLimitTrackerProps) {
     const limitNum = parseInt(limit);
     return Math.min(100, Math.max(0, (remainingNum / limitNum) * 100));
   };
-
-  const tokensPercentage1 = calculatePercentage(
-    rateLimitInfo.stageModel.remainingTokens,
-    rateLimitInfo.stageModel.limitTokens
-  );
   
-  const tokensPercentage2 = calculatePercentage(
+  const tokensPercentage = calculatePercentage(
     rateLimitInfo.responseModel.remainingTokens,
     rateLimitInfo.responseModel.limitTokens
   );
@@ -133,18 +126,6 @@ export function RateLimitTracker({ rateLimitInfo }: RateLimitTrackerProps) {
       <CardContent className="space-y-4">
         <div className="space-y-2">
           <div className="flex justify-between text-sm">
-            <span>Stage Model Tokens ({rateLimitInfo.stageModel.model})</span>
-            <span>
-              {tokensReset 
-                ? rateLimitInfo.stageModel.limitTokens || '0' 
-                : rateLimitInfo.stageModel.remainingTokens || '0'}/{rateLimitInfo.stageModel.limitTokens || '0'}
-            </span>
-          </div>
-          <Progress value={tokensPercentage1} className={`h-2 ${getStatusColor(tokensPercentage1)}`} />
-        </div>
-        
-        <div className="space-y-2">
-          <div className="flex justify-between text-sm">
             <span>Response Model Tokens ({rateLimitInfo.responseModel.model})</span>
             <span>
               {tokensReset 
@@ -152,7 +133,7 @@ export function RateLimitTracker({ rateLimitInfo }: RateLimitTrackerProps) {
                 : rateLimitInfo.responseModel.remainingTokens || '0'}/{rateLimitInfo.responseModel.limitTokens || '0'}
             </span>
           </div>
-          <Progress value={tokensPercentage2} className={`h-2 ${getStatusColor(tokensPercentage2)}`} />
+          <Progress value={tokensPercentage} className={`h-2 ${getStatusColor(tokensPercentage)}`} />
         </div>
         
         <div className="text-xs text-gray-500 mt-2">
