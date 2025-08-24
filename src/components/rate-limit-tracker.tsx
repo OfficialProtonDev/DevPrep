@@ -133,7 +133,7 @@ export function RateLimitTracker({ rateLimitInfo }: RateLimitTrackerProps) {
       <CardContent className="space-y-4">
         <div className="space-y-2">
           <div className="flex justify-between text-sm">
-            <span>Tokens ({rateLimitInfo.stageModel.model})</span>
+            <span>Stage Model Tokens ({rateLimitInfo.stageModel.model})</span>
             <span>
               {tokensReset 
                 ? rateLimitInfo.stageModel.limitTokens || '0' 
@@ -145,7 +145,7 @@ export function RateLimitTracker({ rateLimitInfo }: RateLimitTrackerProps) {
         
         <div className="space-y-2">
           <div className="flex justify-between text-sm">
-            <span>Tokens ({rateLimitInfo.responseModel.model})</span>
+            <span>Response Model Tokens ({rateLimitInfo.responseModel.model})</span>
             <span>
               {tokensReset 
                 ? rateLimitInfo.responseModel.limitTokens || '0' 
